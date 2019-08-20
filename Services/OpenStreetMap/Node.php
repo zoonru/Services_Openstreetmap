@@ -33,6 +33,12 @@ class Services_OpenStreetMap_Node extends Services_OpenStreetMap_Object
      */
     protected $type = 'node';
 
+    /** @var float|null */
+    protected $lon = null;
+
+    /** @var float|null */
+    protected $lat = null;
+
     /**
      * Latitude of node
      *
@@ -40,7 +46,7 @@ class Services_OpenStreetMap_Node extends Services_OpenStreetMap_Object
      */
     public function getLat(): float
     {
-        return (float) $this->getAttributes()->lat;
+        return $this->lat ?? (float)$this->getAttributes()->lat;
     }
 
     /**
@@ -50,7 +56,7 @@ class Services_OpenStreetMap_Node extends Services_OpenStreetMap_Object
      */
     public function getLon(): float
     {
-        return (float) $this->getAttributes()->lon;
+        return $this->lon ?? (float)$this->getAttributes()->lon;
     }
 
     /**
@@ -84,6 +90,7 @@ class Services_OpenStreetMap_Node extends Services_OpenStreetMap_Object
                 'Latitude can\'t be greater than 90'
             );
         }
+        $this->lat = $value;
         return $this;
     }
 
@@ -118,6 +125,7 @@ class Services_OpenStreetMap_Node extends Services_OpenStreetMap_Object
                 'Longitude can\'t be greater than 180'
             );
         }
+        $this->lon = $value;
         return $this;
     }
 
