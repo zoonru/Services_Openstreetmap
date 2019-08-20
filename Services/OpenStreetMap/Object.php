@@ -190,6 +190,13 @@ class Services_OpenStreetMap_Object
             $nodelist->item(0)->setAttribute('action', $this->action);
             $nodelist->item(0)->setAttribute('id', $this->getId());
 
+            if (method_exists($this, 'getLon')) {
+                $nodelist->item(0)->setAttribute('lon', $this->getLon());
+            }
+            if (method_exists($this, 'getLat')) {
+                $nodelist->item(0)->setAttribute('lat', $this->getLat());
+            }
+
             if (!is_null($this->changesetId)) {
                 $nodelist->item(0)->setAttribute('changeset', $this->changesetId);
             }
