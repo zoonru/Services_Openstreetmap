@@ -91,7 +91,7 @@ class Services_OpenStreetMap_Comment extends Services_OpenStreetMap_Object
     public function setXml(SimpleXMLElement $xml): Services_OpenStreetMap_Object
     {
         $this->xml = $xml->saveXml();
-        $obj = $xml->xpath('//' . $this->getType());
+        $obj = $xml->xpath('descendant-or-self::' . $this->getType());
         $kids = [];
         foreach ($obj[0]->children() as $child) {
             $key = (string) $child->attributes()->k;
