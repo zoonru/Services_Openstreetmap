@@ -109,15 +109,21 @@ class Services_OpenStreetMap_Changeset extends Services_OpenStreetMap_Object
     {
         $response = null;
         $code = null;
+        $tags = [];
         $this->members = [];
         $this->open = true;
         $config = $this->getConfig();
         $userAgent = $config->getValue('User-Agent');
+
+        foreach ($this->getTags() as $tag => $value) {
+            $tags[] = '<tag k="' . htmlspecialchars($tag) . '" v="' . htmlspecialchars($value) . '"/>';
+        }
+
         $doc = "<?xml version='1.0' encoding=\"UTF-8\"?>\n" .
         '<osm version="0.6" generator="' . $userAgent . '">'
             . "<changeset id='0' open='false'>"
             . '<tag k="comment" v="' . $message . '"/>'
-            . '<tag k="created_by" v="' . $userAgent . '/0.1"/>'
+            . implode('', $tags)
             . '</changeset></osm>';
         $url = $config->getValue('server')
             . 'api/'
